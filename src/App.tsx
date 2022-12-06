@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.scss';
 import Passwords from './components/Passwords/Passwords';
 import Settings from './components/Settings/Settings';
@@ -11,13 +11,29 @@ const symbols = '#$%&*,.:;!?([{}])-+_';
 function App() {
   const [passwordList, setPasswordList] = useState<string[]>([]);
   const [settings, setSettings] = useState({
-    lenght: 12,
+    lenght: 15,
     hasLowercase: true,
     hasUppercase: true,
     hasNumbers: true,
     hasSymbols: true,
     deleteSimilar: true,
   });
+
+  function saveSettingsToLocalStorage() {
+    localStorage.setItem('settings', JSON.stringify(settings));
+    console.log(settings);
+    console.log('Настройки сохранены!');
+  }
+
+  function loadSettingsFromLocalStorage() {
+    const savedSettings = localStorage.getItem('settings');
+    console.log(savedSettings);
+    if (savedSettings) {
+      setSettings(JSON.parse(savedSettings));
+      console.log(settings);
+      console.log('Настройки прочитаны!');
+    }
+  }
 
   function shuffle(array: string[]) {
     let currentIndex = array.length,
@@ -104,12 +120,23 @@ function App() {
   }
 
   function fillPasswordList() {
-    const newPasswords = [];
-    for (let i = 0; i < 10; i++) {
-      newPasswords.push(generatePassword());
+    if (
+      !settings.hasLowercase &&
+      !settings.hasUppercase &&
+      !settings.hasNumbers &&
+      !settings.hasSymbols
+    ) {
+      setPasswordList([]);
+    } else {
+      const newPasswords = [];
+      for (let i = 0; i < 5; i++) {
+        newPasswords.push(generatePassword());
+      }
+      setPasswordList(newPasswords);
     }
-    setPasswordList(newPasswords);
   }
+
+  useEffect(() => loadSettingsFromLocalStorage(), []);
 
   return (
     <div className="app">
@@ -119,10 +146,13 @@ function App() {
           fillPasswordList={fillPasswordList}
           settings={settings}
           setSettings={setSettings}
+          saveSettingsToLocalStorage={saveSettingsToLocalStorage}
         />
         <Passwords
           fillPasswordList={fillPasswordList}
           passwordList={passwordList}
+          settings={settings}
+          saveSettingsToLocalStorage={saveSettingsToLocalStorage}
         />
       </div>
     </div>

@@ -2,18 +2,17 @@
 
 .settingsContainer {
   @include contaiter;
-  min-width: 200px;
   display: flex;
   flex-direction: column;
   gap: 0px;
   label {
-    height: 25px;
+    height: 24px;
     display: flex;
     gap: 20px;
     align-items: center;
     justify-content: space-between;
-    padding: 15px;
-    border-radius: 15px;
+    padding: 10px;
+    border-radius: 10px;
     transition: all ease-in-out 0.2s;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
