@@ -1,0 +1,37 @@
+@import '../../styles/const.scss';
+
+.settingsContainer {
+  @include contaiter;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  label {
+    height: 25px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-radius: 15px;
+    transition: all ease-in-out 0.2s;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    &:hover {
+      cursor: pointer;
+      background-color: darken($color1, 10%);
+    }
+  }
+  input[type='number'] {
+    font-size: 20px;
+  }
+  input[type='checkbox'] {
+    transform: scale(1.5);
+    accent-color: $color2;
+    transition: all ease-in-out 1s;
+  }
+}

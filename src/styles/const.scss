@@ -1,0 +1,12 @@
+$color1: rgb(241, 241, 241);
+$color2: #abf000;
+$color3: rgb(247, 232, 101);
+
+@mixin contaiter {
+  min-width: 300px;
+  background-color: $color1;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 2px 2px 0px 0px $color2;
+  font-size: 18px;
+}
