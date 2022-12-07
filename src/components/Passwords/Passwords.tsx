@@ -48,7 +48,7 @@ const Passwords: React.FC<PropTypes> = ({
     <div className="passwordContainer">
       {copied.length > 0 && (
         <div className="passwordContainer__copied">
-          <span>{copied}</span> скопирован!
+          <span>{copied} </span>скопирован!
         </div>
       )}
       <button
