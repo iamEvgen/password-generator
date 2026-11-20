@@ -1,0 +1,26 @@
+.history {
+  margin-top: 22px;
+  &__heading { gap: 16px; }
+  &__count { white-space: nowrap; font-size: var(--font-size-muted); font-weight: 500; color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 3px 7px; font-family: var(--mono); margin-left: 5px; }
+  &__count > span { color: var(--muted); }
+  &__description { color: var(--muted); font-size: var(--font-size-muted); line-height: 1.8; margin: 7px 0 20px; }
+  &__empty { padding: 25px 8px 35px; }
+  &__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  &__list .password-value { font-size: 15px; }
+  &__confirmation { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--surface-soft); border: 1px solid var(--border); border-radius: 12px; padding: 10px 13px; margin-bottom: 16px; }
+  &__confirmation p { font-size: 12px; margin: 0; }
+  &__confirmation > div { display: flex; gap: 6px; flex-shrink: 0; }
+}
+
+@media (max-width: 760px) {
+  .history__list { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .history { margin-top: 16px; }
+  .history__heading { flex-wrap: wrap; gap: 2px 10px; }
+  .history__heading > h2 { flex-wrap: wrap; row-gap: 8px; }
+  .history__confirmation { flex-direction: column; align-items: flex-start; }
+  .history__confirmation > div { align-self: flex-end; }
+  .history__list .password-value { font-size: 14px; }
+}

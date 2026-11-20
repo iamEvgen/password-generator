@@ -1,76 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { TbRefresh } from 'react-icons/tb';
+import PasswordRow from '../PasswordRow/PasswordRow';
 import './Passwords.scss';
-import { TbCopy } from 'react-icons/tb';
-import { ISettings } from '../../interfaces/interfaces';
 
 interface PropTypes {
-  fillPasswordList: () => void;
   passwordList: string[];
-  settings: ISettings;
-  saveSettingsToLocalStorage: () => void;
+  regenerate: () => void;
+  onCopy: (password: string) => Promise<void>;
+  copiedPassword: string | null;
 }
 
-const Passwords: React.FC<PropTypes> = ({
-  settings,
-  fillPasswordList,
-  passwordList,
-  saveSettingsToLocalStorage,
-}) => {
-  const [copied, setCopied] = useState('');
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const copyToClipboard = async (event: any) => {
-    const text = event.target.innerText;
-    if ('clipboard' in navigator) {
-      await navigator.clipboard.writeText(text);
-    } else {
-      document.execCommand('copy', true, text);
-    }
-    setCopied(text);
-    setTimeout(() => setCopied(''), 1000);
-  };
-
-  const renderPasswords = passwordList.map((password) => {
-    return (
-      <li
-        onClick={(event) => copyToClipboard(event)}
-        className="passwordContainer__password"
-        key={password}
-      >
-        {password} <TbCopy />
-      </li>
-    );
-  });
-
-  useEffect(fillPasswordList, [settings]);
-
+function Passwords({ passwordList, regenerate, onCopy, copiedPassword }: PropTypes) {
   return (
-    <div className="passwordContainer">
-      {copied.length > 0 && (
-        <div className="passwordContainer__copied">
-          <span>{copied} </span>скопирован!
-        </div>
-      )}
-      <button
-        onClick={() => {
-          fillPasswordList();
-          saveSettingsToLocalStorage();
-        }}
-        className="passwordContainer__generateButton"
-      >
-        Придумать!
-      </button>
-      {passwordList.length > 0 && (
-        <ul className="passwordContainer__passwords">{renderPasswords}</ul>
-      )}
-      {passwordList.length === 0 && (
-        <div className="passwordContainer__alert">
-          Невозможно сделать <br />
-          пароль из ничего 🥲
-        </div>
-      )}
-    </div>
+    <section className="passwords panel" aria-labelledby="passwords-title">
+      <div className="section-heading">
+        <h2 id="passwords-title">Пароли</h2>
+        <span className="count-badge" aria-label="Количество паролей">{passwordList.length}</span>
+      </div>
+      {passwordList.length > 0 ? <ol className="password-list">
+        {passwordList.map((password, index) => <PasswordRow key={index} password={password} index={index} onCopy={onCopy} copied={copiedPassword === password} />)}
+      </ol> : <div className="empty-state passwords__empty">
+        <p>Выберите хотя бы одну категорию символов.</p>
+      </div>}
+      <button type="button" className="generate-button" onClick={regenerate} disabled={!passwordList.length}><TbRefresh aria-hidden="true" /> Сгенерировать</button>
+    </section>
   );
-};
+}
 
 export default Passwords;

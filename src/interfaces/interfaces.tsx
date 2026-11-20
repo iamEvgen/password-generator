@@ -6,3 +6,10 @@ export interface ISettings {
   hasSymbols: boolean;
   deleteSimilar: boolean;
 }
+
+export interface IHistoryEntry {
+  password: string;
+  copiedAt: number;
+}
+
+export type Theme = 'light' | 'dark';
